@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getUsers, createUser, createSession } from '../services/api';
 
 type FormValues = {
@@ -19,6 +19,8 @@ export default function Cadastro() {
 
   const navigate = useNavigate();
 
+  const [emailDuplicado,setEmailDuplicado] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) navigate('/home', { replace: true });
@@ -32,9 +34,11 @@ export default function Cadastro() {
         alert('Nome de usuário já existe. Escolha outro.');
         return;
       }
+      setEmailDuplicado(false);
       const Emailexistente = await getUsers({ email: data.email });
 if (Array.isArray(Emailexistente) && Emailexistente.length > 0) {
   alert("E-mail ja cadastrado, use outro e-mail");
+  setEmailDuplicado(true);
   return;
 }
 
@@ -102,7 +106,7 @@ if (Array.isArray(Emailexistente) && Emailexistente.length > 0) {
               type="email"
               placeholder="Digite seu e-mail"
             />
-            {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email.message}</p>}
+            {emailDuplicado && <p className="text-xs text-red-600 mt-1"></p>}
           </label>
 
           <label className="block">

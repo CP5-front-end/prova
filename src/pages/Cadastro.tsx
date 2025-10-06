@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 type FormValues = {
   nome: string;
@@ -14,9 +15,18 @@ export default function Cadastro() {
     formState: { errors },
   } = useForm<FormValues>();
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) navigate('/home', { replace: true });
+  }, [navigate]);
+
   const onSubmit = (data: FormValues) => {
     console.log('Dados do cadastro:', data);
-    // Aqui você pode integrar com API ou salvar localmente.
+    // Aqui você integraria com API; por enquanto guardamos um token fictício
+    localStorage.setItem('token', 'dummy-token');
+    navigate('/home', { replace: true });
   };
 
   return (
@@ -72,6 +82,15 @@ export default function Cadastro() {
 
           <div className="text-center mt-2">
             <Link to="/login" className="text-sm text-indigo-600 hover:underline">Já tem conta? Entrar</Link>
+          </div>
+          <div className="mt-3 text-center">
+            <button
+              type="button"
+              onClick={() => navigate('/home')}
+              className="inline-flex items-center mt-2 px-3 py-1.5 rounded-md border border-slate-200 bg-slate-50 text-sm text-slate-700 hover:bg-slate-100"
+            >
+              Ir para Home
+            </button>
           </div>
         </form>
 

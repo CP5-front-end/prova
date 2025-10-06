@@ -1,20 +1,65 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { getUsers, createSession, API_BASE } from '../services/api';
 
 export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
     // Se já estiver autenticado (token no localStorage), redireciona para /home
-    const token = localStorage.getItem('token');
-    if (token) navigate('/home', { replace: true });
+    const check = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      try {
+        const res = await fetch(`${API_BASE}/sessions?token=${token}`);
+        const arr = await res.json();
+        if (Array.isArray(arr) && arr.length > 0) {
+          navigate('/home', { replace: true });
+        }
+      } catch (err) {
+        console.error('Erro ao verificar sessão:', err);
+      }
+    };
+    check();
   }, [navigate]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // Aqui você integraria com a API; por enquanto guardamos um token fictício
-    localStorage.setItem('token', 'dummy-token');
-    navigate('/home', { replace: true });
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const nomeUsuario = formData.get('username') as string | null;
+    const password = formData.get('password') as string | null;
+    if (!nomeUsuario || !password) {
+      alert('Preencha usuário e senha');
+      return;
+    }
+
+    (async () => {
+      try {
+        const users = await getUsers({ nomeUsuario });
+        if (!Array.isArray(users) || users.length === 0) {
+          alert('Usuário não encontrado');
+          return;
+        }
+        const user = users[0];
+        if (user.password !== password) {
+          alert('Senha incorreta');
+          return;
+        }
+
+        const token = Math.random().toString(36).slice(2);
+        await createSession({ userId: user.id, token });
+
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+
+        navigate('/home', { replace: true });
+      } catch (err) {
+        console.error('Erro no login:', err);
+        alert('Erro ao realizar login');
+      }
+    })();
   };
 
   return (

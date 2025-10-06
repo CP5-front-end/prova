@@ -1,5 +1,3 @@
-Descrição do Projeto – Checkpoint 5: Access Control
-
 O projeto Access Control CP5 foi desenvolvido como parte da avaliação da disciplina de Front-End, com o objetivo de colocar em prática os conceitos de autenticação de usuários, manipulação de formulários e integração com o json-server, utilizando as tecnologias Vite, React e TypeScript.
 
 A aplicação tem como foco a criação de um sistema simples de login e cadastro de usuários. Nela, o usuário pode se registrar e depois realizar o login, com todas as validações feitas por meio do React Hook Form. Também foram aplicadas boas práticas de organização do código, controle de estado, exibição de mensagens de erro e versionamento contínuo do projeto.
@@ -48,8 +46,8 @@ O desenvolvimento deste projeto contribuiu para o aprimoramento das habilidades 
 
 Integrantes do grupo
 
-Nome do aluno 1 – RM XXXXX
+Carlos Alberto – RM 566022
 
-Nome do aluno 2 – RM XXXXX
+Mathaus Victor – RM 564146
 
-Nome do aluno 3 – RM XXXXX
+Vinícius Luis – RM 563340

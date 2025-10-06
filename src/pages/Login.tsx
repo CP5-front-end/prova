@@ -54,7 +54,7 @@ export default function Login() {
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
 
-        navigate('/home', { replace: true });
+  navigate('/dashboard', { replace: true });
       } catch (err) {
         console.error('Erro no login:', err);
         alert('Erro ao realizar login');

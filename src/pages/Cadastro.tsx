@@ -58,7 +58,7 @@ if (Array.isArray(Emailexistente) && Emailexistente.length > 0) {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(created));
 
-      navigate('/home', { replace: true });
+  navigate('/dashboard', { replace: true });
     } catch (err) {
       console.error('Erro no cadastro:', err);
       alert('Erro ao cadastrar. Veja o console para mais detalhes.');

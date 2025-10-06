@@ -32,6 +32,11 @@ export default function Cadastro() {
         alert('Nome de usuário já existe. Escolha outro.');
         return;
       }
+      const Emailexistente = await getUsers({ email: data.email });
+if (Array.isArray(Emailexistente) && Emailexistente.length > 0) {
+  alert("E-mail ja cadastrado, use outro e-mail");
+  return;
+}
 
       // cria usuário
       const created = await createUser({

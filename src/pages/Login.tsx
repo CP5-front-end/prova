@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-white">
@@ -41,6 +43,10 @@ export default function Login() {
           
         </form>
 
+        <div className="mt-4 text-center">
+          <span className="text-sm text-slate-600">Não tem uma conta?</span>
+          <Link to="/cadastro" className="ml-2 text-indigo-600 hover:underline">Cadastre-se</Link>
+        </div>
         <footer className="mt-6 text-center text-xs text-slate-400">Versão provisória - não funcional</footer>
       </div>
     </div>

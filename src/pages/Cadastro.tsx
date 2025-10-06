@@ -1,11 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { getUsers, createUser, createSession } from '../services/api';
 
 type FormValues = {
   nome: string;
   nomeUsuario: string;
   email: string;
+  password: string;
 };
 
 export default function Cadastro() {
@@ -22,11 +24,36 @@ export default function Cadastro() {
     if (token) navigate('/home', { replace: true });
   }, [navigate]);
 
-  const onSubmit = (data: FormValues) => {
-    console.log('Dados do cadastro:', data);
-    // Aqui você integraria com API; por enquanto guardamos um token fictício
-    localStorage.setItem('token', 'dummy-token');
-    navigate('/home', { replace: true });
+  const onSubmit = async (data: FormValues) => {
+    try {
+      // checa se já existe usuário com mesmo nomeUsuario
+      const existing = await getUsers({ nomeUsuario: data.nomeUsuario });
+      if (Array.isArray(existing) && existing.length > 0) {
+        alert('Nome de usuário já existe. Escolha outro.');
+        return;
+      }
+
+      // cria usuário
+      const created = await createUser({
+        nome: data.nome,
+        nomeUsuario: data.nomeUsuario,
+        email: data.email,
+        password: data.password,
+      });
+
+      // cria sessão simples com token
+  const token = Math.random().toString(36).slice(2);
+  await createSession({ userId: created.id, token });
+
+      // salva no localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(created));
+
+      navigate('/home', { replace: true });
+    } catch (err) {
+      console.error('Erro no cadastro:', err);
+      alert('Erro ao cadastrar. Veja o console para mais detalhes.');
+    }
   };
 
   return (
@@ -71,6 +98,17 @@ export default function Cadastro() {
               placeholder="Digite seu e-mail"
             />
             {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email.message}</p>}
+          </label>
+
+          <label className="block">
+            <span className="text-sm text-slate-600">Senha</span>
+            <input
+              className="mt-1 block w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              {...register('password', { required: 'Senha é obrigatória', minLength: { value: 6, message: 'mínimo 6 caracteres' } })}
+              type="password"
+              placeholder="Escolha uma senha"
+            />
+            {errors.password && <p className="text-xs text-red-600 mt-1">{errors.password.message}</p>}
           </label>
 
           <button

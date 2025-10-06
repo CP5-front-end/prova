@@ -1,73 +1,55 @@
-# React + TypeScript + Vite
+Descrição do Projeto – Checkpoint 5: Access Control
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O projeto Access Control CP5 foi desenvolvido como parte da avaliação da disciplina de Front-End, com o objetivo de colocar em prática os conceitos de autenticação de usuários, manipulação de formulários e integração com o json-server, utilizando as tecnologias Vite, React e TypeScript.
 
-Currently, two official plugins are available:
+A aplicação tem como foco a criação de um sistema simples de login e cadastro de usuários. Nela, o usuário pode se registrar e depois realizar o login, com todas as validações feitas por meio do React Hook Form. Também foram aplicadas boas práticas de organização do código, controle de estado, exibição de mensagens de erro e versionamento contínuo do projeto.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Objetivos do projeto
 
-## React Compiler
+Criar páginas de login e cadastro com validação dos campos obrigatórios.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Exibir mensagens de erro personalizadas para orientar o usuário.
 
-## Expanding the ESLint configuration
+Verificar duplicidade de nome de usuário e e-mail antes do cadastro.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Implementar uma autenticação simulada com armazenamento de dados no localStorage ou sessionStorage.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Exibir o nome e o e-mail do usuário autenticado em todas as páginas da aplicação.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Aplicar estilização e responsividade com Tailwind CSS.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Versionar o código com commits descritivos e padronizados (feat:, fix:, enhancement:).
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Tecnologias utilizadas
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Vite + React + TypeScript
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+React Hook Form
+
+Tailwind CSS
+
+json-server
+
+LocalStorage / SessionStorage
+
+Estrutura do endpoint
+O projeto utiliza um endpoint chamado “usuarios”, responsável por armazenar as informações dos cadastros, seguindo a estrutura abaixo:
+
+{
+  "id": 1,
+  "nome": "Exemplo",
+  "nomeUsuario": "exemplo123",
+  "email": "exemplo@email.com"
+}
+
+
+Conclusão
+O desenvolvimento deste projeto contribuiu para o aprimoramento das habilidades em React, especialmente no uso de formulários com validação e integração com um servidor simulado. Também reforçou a importância de um bom versionamento e da utilização de ferramentas modernas para o desenvolvimento front-end.
+
+Integrantes do grupo
+
+Nome do aluno 1 – RM XXXXX
+
+Nome do aluno 2 – RM XXXXX
+
+Nome do aluno 3 – RM XXXXX

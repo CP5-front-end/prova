@@ -28,7 +28,6 @@ export default function Cadastro() {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      // checa se já existe usuário com mesmo nomeUsuario
       const existing = await getUsers({ nomeUsuario: data.nomeUsuario });
       if (Array.isArray(existing) && existing.length > 0) {
         alert('Nome de usuário já existe. Escolha outro.');
@@ -36,29 +35,22 @@ export default function Cadastro() {
       }
       setEmailDuplicado(false);
       const Emailexistente = await getUsers({ email: data.email });
-if (Array.isArray(Emailexistente) && Emailexistente.length > 0) {
-  alert("E-mail ja cadastrado, use outro e-mail");
-  setEmailDuplicado(true);
-  return;
-}
-
-      // cria usuário
+      if (Array.isArray(Emailexistente) && Emailexistente.length > 0) {
+        alert("E-mail já cadastrado, use outro e-mail");
+        setEmailDuplicado(true);
+        return;
+      }
       const created = await createUser({
         nome: data.nome,
         nomeUsuario: data.nomeUsuario,
         email: data.email,
         password: data.password,
       });
-
-      // cria sessão simples com token
-  const token = Math.random().toString(36).slice(2);
-  await createSession({ userId: created.id, token });
-
-      // salva no localStorage
+      const token = Math.random().toString(36).slice(2);
+      await createSession({ userId: created.id, token });
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(created));
-
-  navigate('/dashboard', { replace: true });
+      navigate('/dashboard', { replace: true });
     } catch (err) {
       console.error('Erro no cadastro:', err);
       alert('Erro ao cadastrar. Veja o console para mais detalhes.');

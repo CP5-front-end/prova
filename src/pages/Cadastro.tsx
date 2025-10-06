@@ -34,7 +34,7 @@ export default function Cadastro() {
       }
       const Emailexistente = await getUsers({ email: data.email });
 if (Array.isArray(Emailexistente) && Emailexistente.length > 0) {
-  alert("E-mail ja cadastrado, use outro e-mail");
+  alert("E-mail ja cadastrado. use outro e-mail");
   return;
 }
 
